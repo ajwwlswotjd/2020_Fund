@@ -1,0 +1,42 @@
+<canvas width="200" height="200" id="canvas"></canvas>
+
+
+
+<script>
+    const { log , dir } = console;
+    const { PI } = Math;
+    let canvas = document.querySelector("#canvas");
+    let ctx = canvas.getContext("2d");
+    let width = canvas.width;
+    let height = canvas.height;
+    const RADIUS = 40;
+    const MP = - PI / 2;
+
+    // 바깥
+    ctx.beginPath();
+    ctx.moveTo( width/2 , height/2 );
+    ctx.arc( width/2, height/2 , RADIUS + 15 , MP , MP + (0.5) * (PI * 2) );
+    ctx.closePath();
+    ctx.fillStyle = "#1fbba6";
+    ctx.fill();
+    //
+
+    // 베이스
+    ctx.beginPath();
+    ctx.moveTo( width/2 , height/2 );
+    ctx.arc( width/2, height/2 , RADIUS , MP , 3/2*PI );
+    ctx.closePath();
+    ctx.fillStyle = "#189382";
+    ctx.fill();
+    //
+
+    log(ctx);
+
+</script>
+
+
+<style>
+
+    canvas { border: 1px solid #ddd; }
+
+</style>
