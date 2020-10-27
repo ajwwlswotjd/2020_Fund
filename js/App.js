@@ -4,7 +4,7 @@ const { log , dir } = console;
 class App {
     constructor(){
 
-        this.conv_now = 0;
+        this.conv_now = 1;
         this.datas;
         this.investorList = [];
         this.fxArr = [ this.drawMain , this.drawForm , this.drawFund , this.drawInvestor ];
@@ -49,8 +49,8 @@ class App {
         $(".page_title").html(this.txtArr[nextIdx]);
         this.$pages.eq(nextIdx).css({ top : nextTarget }).animate({ top : 0 }, 1000 , ()=>{
             this.isMoving = false;
-            this.fxArr[nextIdx].bind(this)();
             this.conv_now = nextIdx;
+            this.fxArr[nextIdx].bind(this)();
         });
 
     }
@@ -82,6 +82,7 @@ class App {
         .sort((a,b)=> b.percent - a.percent)
         .slice(0,4)
         .forEach(fund => {
+            let percent = olim( fund.current / fund.total * 100 );
             let tr = document.createElement("tr");
             tr.innerHTML =
             `<td class="fowe-2">${ fund.number }</td>
@@ -90,10 +91,12 @@ class App {
             <td class="fowe-2">${ new Date(fund.endDate).toMyString() }</td>
             <td class="fowe-2">
                 <div class="main_progress">
-                    <div class="main_progress_inner gd-r-b">100%</div>
+                    <div class="main_progress_inner gd-r-b">${ percent }%</div>
                 </div>
             </td>`;
             log(tr);
+            $tbody.append(tr);
+            $(tr).find(".main_progress_inner").animate({ width : percent + "%"},1500);
         });
         
         
@@ -101,6 +104,8 @@ class App {
 
     drawForm(){
         // 펀드등록
+        let num = this.getFundNum();
+        log(num);
     }
 
     drawFund(){
@@ -112,14 +117,21 @@ class App {
     }
 
     render(){
-        log(this.datas);
+        // log(this.datas);
     }
 
     async init(){
         this.datas = await this.readData();
         this.addEvent();
         this.render();
-        this.drawMain();
+        this.drawForm();
+    }
+
+    getFundNum(){
+        
+        let f = ()=> String.fromCharCode( Math.floor(Math.random()*26) +65 );
+        let n = (Math.floor(Math.random()*100)).toString().padStart(3,"0");
+        return f()+f()+n;
     }
 }
 
@@ -149,4 +161,8 @@ window.xss = function(str){
         str = str.replaceAll(x[0],x[1]);
     });
     return str;
+}
+
+window.olim = function(num){
+    return Math.ceil(num * 100) / 100;
 }
