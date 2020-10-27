@@ -1,31 +1,137 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script src="js/jquery-3.4.1.js"></script>
     <script src="js/App.js"></script>
+    <link rel="stylesheet" href="fa/css/all.min.css">
     <title>^^7</title>
 </head>
+
 <body>
     <header>
         <div id="logo" class="flex-center-row">
-            <img src="./images/new/logo_1.png" alt="logo" title="logo">
+            <!-- <img src="./images/new/logo_1.png" alt="logo" title="logo"> -->
+            <h1 class="logo_title">KICKSTARTER</h1>
         </div>
+        <nav>
+            <li data-idx="0" class="nav_now">
+                <span>메인페이지</span>
+                <i class="fa fa-chevron-right"></i>
+            </li>
+            <li data-idx="1">
+                <span>펀드등록</span>
+                <i class="fa fa-chevron-right"></i>
+            </li>
+            <li data-idx="2">
+                <span>펀드보기</span>
+                <i class="fa fa-chevron-right"></i>
+            </li>
+            <li data-idx="3">
+                <span>투자자목록</span>
+                <i class="fa fa-chevron-right"></i>
+            </li>
+        </nav>
     </header>
 
     <section id="container">
+        <div class="page_logo">
+            <img src="./images/new/logo_2.png" alt="alt" title="title" class="mr-1">
+            <h1 class="page_title">메인페이지</h1>
+        </div>
 
         <div id="pages">
+            <section id="main" class="page now">
+                <div class="main_container page_container">
+                    <div class="main_cards">
 
+                        <div class="card card_1">
+                            <div class="card_top">
+                                <i class="fa fa-money-bill fosi-8"></i>
+                                <p class="fosi-55 fowe-5">총 모집금액</p>
+                                <p class="mt-1 fosi-7 fowe-4" id="main_fund_total">15,000,000원</p>
+                            </div>
+                            <div class="card_bottom fosi-55 fowe-3">
+                                Increased by 50%
+                            </div>
+                        </div>
+
+                        <div class="card card_2">
+                            <div class="card_top">
+                                <i class="fa fa-coins fosi-8"></i>
+                                <p class="fosi-55 fowe-5">총 투자금액</p>
+                                <p class="mt-1 fosi-7 fowe-4" id="main_invest_total">4,800,000원</p>
+                            </div>
+                            <div class="card_bottom fosi-55 fowe-3">
+                                Increased by 55%
+                            </div>
+                        </div>
+
+                        <div class="card card_3">
+                            <div class="card_top">
+                                <i class="fa fa-wallet fosi-8"></i>
+                                <p class="fosi-55 fowe-5">최근 투자</p>
+                                <p class="mt-1 fosi-7 fowe-4" id="main_invest_recent">0원</p>
+                            </div>
+                            <div class="card_bottom fosi-55 fowe-3" id="main_invest_recent_txt">
+                                <span>0</span>% of total
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="main_table mb-5">
+                        <h1 class="color-999 fosi-6 fowe-5 mb-2" style="height: 30px;">HIGH ACHIVEMENT FUNDS</h1>
+                        <table style="table-layout: fixed;">
+                            <thead align="center">
+                                <tr>
+                                    <th class="fowe-4" width="20%">펀드번호</th>
+                                    <th class="fowe-4" width="20%">펀드명</th>
+                                    <th class="fowe-4" width="20%">모집 금액</th>
+                                    <th class="fowe-4" width="20%">모집 날짜</th>
+                                    <th class="fowe-4" width="20%">달성률</th>
+                                </tr>
+                            </thead>
+                            <tbody align="center">
+                                <tr>
+                                    <td class="fowe-2">A0001</td>
+                                    <td class="fowe-2 ell">우리엄마펀드</td>
+                                    <td class="fowe-2">150,000,000원</td>
+                                    <td class="fowe-2">2020년 10월 25일</td>
+                                    <td class="fowe-2">
+                                        <div class="main_progress">
+                                            <div class="main_progress_inner gd-r-b">100%</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </section>
+            <section id="form" class="page">
+                펀드등록
+            </section>
+            <section id="fund-list" class="page">
+                펀드 보기
+            </section>
+            <section id="investor_list" class="page">
+                투자자목록
+            </section>
         </div>
 
         <footer>
-        
+
         </footer>
     </section>
 </body>
+
 </html>
 
 <!-- https://www.behance.net/gallery/106356433/Dashboard-UI?tracking_source=search_projects_recommended%7Cdashboard%20web -->
