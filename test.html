@@ -1,8 +1,6 @@
 &#8203;
 <canvas width="200" height="200" id="canvas"></canvas>
 
-
-
 <script>
     const { log , dir } = console;
     const { PI } = Math;
@@ -15,8 +13,8 @@
 
     // 바깥
     ctx.beginPath();
-    ctx.moveTo( width/2 , height/2 );
-    ctx.arc( width/2, height/2 , RADIUS + 15 , MP , MP + (0.5) * (PI * 2) );
+    ctx.moveTo( width / 2 , height/2 );
+    ctx.arc( width / 2, height / 2 , RADIUS + 15 , MP , MP + (0.5) * (PI * 2) );
     ctx.closePath();
     ctx.fillStyle = "#1fbba6";
     ctx.fill();
@@ -31,7 +29,14 @@
     ctx.fill();
     //
 
-    log(ctx);
+    ctx.beginPath();
+    ctx.moveTo( width / 2 , height / 2 );
+    ctx.font = "17px noto";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = "#fff";
+    ctx.fillText( "50%" , width / 2, height / 2 );
+    log(ctx);   
 
 </script>
 

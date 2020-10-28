@@ -12,6 +12,7 @@
 </head>
 
 <body>
+
     <header>
         <div id="logo" class="flex-center-row">
             <!-- <img src="./images/new/logo_1.png" alt="logo" title="logo"> -->
@@ -44,7 +45,7 @@
         </div>
 
         <div id="pages">
-            <section id="main" class="page now">
+            <section id="main" class="page">
                 <div class="main_container page_container">
                     <div class="main_cards">
 
@@ -84,14 +85,14 @@
 
                     <div class="main_table mb-5">
                         <h1 class="color-999 fosi-6 fowe-5 mb-2" style="height: 30px;">HIGH ACHIVEMENT FUNDS</h1>
-                        <table style="table-layout: fixed;">
+                        <table>
                             <thead align="center">
                                 <tr>
-                                    <th class="fowe-4" width="20%">펀드번호</th>
-                                    <th class="fowe-4" width="20%">펀드명</th>
-                                    <th class="fowe-4" width="20%">모집 금액</th>
-                                    <th class="fowe-4" width="20%">모집 날짜</th>
-                                    <th class="fowe-4" width="20%">달성률</th>
+                                    <th class="fowe-4" width="10%">펀드번호</th>
+                                    <th class="fowe-4" width="30%">펀드명</th>
+                                    <th class="fowe-4" width="15%">모집 금액</th>
+                                    <th class="fowe-4" width="30%">모집 날짜</th>
+                                    <th class="fowe-4" width="15%">달성률</th>
                                 </tr>
                             </thead>
                             <tbody align="center">
@@ -116,24 +117,59 @@
 
                 <h1 class="form_title fowe-5 color-999 fosi-8 mb-3">REGISTER FUND</h1>
                 <div class="fund_form">
-                    <div class="form_top">
+                    <div class="form_top form_box">
                         <i class="fa fa-store ml-1 fosi-6"></i>
                         <div class="form_items ml-1">
                             <h1 class="fosi-5 fowe-4">펀드번호</h1>
-                            <p class="fosi-6 fowe-5">A0001</p>
+                            <p id="form_number" class="fosi-6 fowe-5">A0001</p>
                         </div>
                         <div class="form_top_tip fosi-4">
                             펀드번호는 자동으로 입력됩니다. <i class="fosi-55 fas fa-info-circle"></i>
                         </div>
                     </div>
                     <div class="form_box">
-                        
+                        <i class="fas fa-tag ml-1 fosi-6"></i>
+                        <div class="form_items ml-1">
+                            <h1 class="fosi-5 fowe-4">창업펀드명</h1>
+                            <input type="text" placeholder="펀드명을 입력해주세요" class="fowe-5 fosi-6" maxlength="100" id="form_name">
+                        </div>
+                        <div class="form_top_tip fosi-4">
+                            <!-- 펀드번호는 자동으로 입력됩니다s. <i class="fosi-55 fas fa-info-circle"></i> -->
+                        </div>
+                    </div>
+                    <div class="form_box">
+                        <i class="far fa-calendar ml-1 fosi-6"></i>
+                        <div class="form_items ml-1">
+                            <h1 class="fosi-5 fowe-4">모집마감일</h1>
+                            <input type="datetime-local" step="1" class="fowe-5 fosi-6" id="form_date">
+                        </div>
+                        <div class="form_top_tip fosi-4">
+                            <!-- 펀드번호는 자동으로 입력됩니다. <i class="fosi-55 fas fa-info-circle"></i> -->
+                        </div>
+                    </div>
+                    <div class="form_box">
+                        <i class="far fa-credit-card ml-1 fosi-6"></i>
+                        <div class="form_items ml-1">
+                            <h1 class="fosi-5 fowe-4">모집금액</h1>
+                            <input type="text" placeholder="모집금액을 입력해주세요" class="fowe-5 fosi-6" id="form_total">
+                        </div>
+                        <div class="form_top_tip fosi-4">
+                            천단위 구분기호는 자동으로 입력됩니다. <i class="fosi-55 fas fa-info-circle"></i>
+                        </div>
+                    </div>
+                    <div class="form_box form_box_end flex-center-row">
+                        <button id="form_submit_btn">펀드 등록하기</button>
                     </div>
                 </div>
                 
             </section>
-            <section id="fund-list" class="page">
-                펀드 보기
+            <section id="fund-list" class="page flex-center-column">
+
+                <div class="fund_title fosi-10">
+                    <span class="fowe-5">킥스타터</span> 펀드 리스트
+                    <p class="fowei-4 fosi-5 color-888">관심있어 하실만한 상품들이 많아요!</p>
+                </div>
+
             </section>
             <section id="investor_list" class="page">
                 투자자목록
@@ -150,6 +186,7 @@
 
 <!-- https://www.behance.net/gallery/106356433/Dashboard-UI?tracking_source=search_projects_recommended%7Cdashboard%20web -->
 <!-- https://www.google.com/search?q=web+form+design&rlz=1C1SQJL_koKR882KR882&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiv_dT7y9XsAhUKc3AKHU7VAJIQ_AUoAXoECAQQAw&biw=1883&bih=950#imgrc=cVwOCqBAlxpJDM -->
+<!-- https://www.kixx.co.kr/ -->
 <!-- #00ffc4
 #000e6e
 #5f5fff

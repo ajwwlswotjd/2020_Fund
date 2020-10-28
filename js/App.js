@@ -4,7 +4,8 @@ const { log , dir } = console;
 class App {
     constructor(){
 
-        this.conv_now = 1;
+        this.num;
+        this.conv_now = 2;
         this.datas;
         this.investorList = [];
         this.fxArr = [ this.drawMain , this.drawForm , this.drawFund , this.drawInvestor ];
@@ -24,7 +25,31 @@ class App {
     addEvent(){
         
         $("nav > li").on("click", this.navClickEventHandler );
+        $("#form_total").on("input" , this.totalInputEventHandler );
+        $("#form_submit_btn").on("click", this.fundRegisterBtnClickEventHandler );
 
+    }
+
+    fundRegisterBtnClickEventHandler = e => {
+        let name = form_name.value;
+        let date = form_date.value;
+        let total = form_total.value.split(",").join('')*1;
+        
+        if( name.trim() === "" || date.trim() === "" || total <= 0 ){
+            alert("누락된 항목이 있습니다.");
+            return;
+        }
+        let endDate = new Date( date ).toString();
+        let fund =  { number : this.num, name , endDate , total , current : 0 };
+        this.datas.push( fund );
+        alert("펀드 등록이 완료되었습니다.");
+        this.drawForm();
+    }
+
+    totalInputEventHandler = e => {
+        let value = e.currentTarget.value;
+        value = (value.replaceAll(/[^0-9]/g,"")*1).toLocaleString();
+        e.currentTarget.value = value;
     }
 
     navClickEventHandler = e => {
@@ -50,9 +75,8 @@ class App {
         this.$pages.eq(nextIdx).css({ top : nextTarget }).animate({ top : 0 }, 1000 , ()=>{
             this.isMoving = false;
             this.conv_now = nextIdx;
-            this.fxArr[nextIdx].bind(this)();
         });
-
+        this.fxArr[nextIdx].bind(this)();
     }
 
     drawMain(){
@@ -85,10 +109,11 @@ class App {
             let percent = olim( fund.current / fund.total * 100 );
             let tr = document.createElement("tr");
             tr.innerHTML =
-            `<td class="fowe-2">${ fund.number }</td>
-            <td class="fowe-2">${ fund.name }</td>
-            <td class="fowe-2">${ fund.total.toLocaleString() }원</td>
-            <td class="fowe-2">${ new Date(fund.endDate).toMyString() }</td>
+            `
+            <td title="${ xss(fund.number) }" class="fowe-2">${ xss(fund.number) }</td>
+            <td title="${ xss(fund.name) }" class="fowe-2">${ xss(fund.name) }</td>
+            <td title="${ fund.total.toLocaleString() }원" class="fowe-2">${ fund.total.toLocaleString() }원</td>
+            <td title="${ new Date(fund.endDate).toMyString() }" class="fowe-2">${ new Date(fund.endDate).toMyString() }</td>
             <td class="fowe-2">
                 <div class="main_progress">
                     <div class="main_progress_inner gd-r-b">${ percent }%</div>
@@ -104,12 +129,14 @@ class App {
 
     drawForm(){
         // 펀드등록
-        let num = this.getFundNum();
-        log(num);
+        this.num = this.getFundNum();
+        $("#form_number").html(this.num);
+        $(".fund_form input").val("");
     }
 
     drawFund(){
         // 펀드 보기
+        
     }
 
     drawInvestor(){
@@ -124,14 +151,15 @@ class App {
         this.datas = await this.readData();
         this.addEvent();
         this.render();
-        this.drawForm();
+        // this.drawForm();
+        this.drawFund();
     }
 
     getFundNum(){
         
-        let f = ()=> String.fromCharCode( Math.floor(Math.random()*26) +65 );
+        let f = ()=> String.fromCharCode( Math.floor(Math.random() * 26) + 65 );
         let n = (Math.floor(Math.random()*100)).toString().padStart(3,"0");
-        return f()+f()+n;
+        return f() + f() + n;
     }
 }
 
@@ -149,6 +177,10 @@ window.sum = function(){
 
 Date.prototype.toMyString = function(){
     return `${this.getFullYear()}년 ${this.getMonth()+1}월 ${this.getDate()}일 ${this.getHours()}시 ${this.getMinutes()}분 ${this.getSeconds()}초`;
+}
+
+Date.prototype.toJSONString = function(){
+    return this.toISOString().split('.')[0].split("T").join(" ");
 }
 
 window.xss = function(str){
