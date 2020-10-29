@@ -462,10 +462,17 @@ nav > li > i {
     background-color: #fff;
     border-radius: 0.25rem;
     position: relative;
+    padding: 3rem;
 
     display: flex;
     flex-direction: column;
 }
+
+.fund_canvas {
+    border: 1px solid #ddd;
+    margin-left: auto;
+}
+
 
 
 /* fundLust end */
