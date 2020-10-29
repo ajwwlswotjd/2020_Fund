@@ -93,7 +93,9 @@ li {list-style: none; }
 .flex-center-row { display: flex; align-items: center; justify-content: center; flex-direction: row; }
 .flex-center-column { display: flex; flex-direction: column; justify-content: center; align-items: center; }
 .justify-content-start { justify-content: flex-start !important; }
+
 .parent-cover { width: 100%; height: 100%; position: relative; }
+.tealc { text-align: center; }
 
 .fowe-1 { font-weight: 200; }
 .fowe-2 { font-weight: 300; }
@@ -429,8 +431,41 @@ nav > li > i {
 
 /* fundList */
 
-#fund_list {
-    
+#fund-list {
+    user-select: none;
 }
+
+.list {
+    width: 80%;
+    height: 400px;
+    /* overflow: hidden; */
+    /* overflow-x: hidden; */
+    position: relative;
+}
+
+.list_inner {
+    width: auto;
+    height: 100%;
+    display: flex;
+    position: absolute;
+    align-items: center;
+    top: 0;
+    left: 0;
+}
+
+.fund_item {
+    margin-right: 20px;
+    width: 340px;
+    height: 100%;
+    box-shadow: 1px 1px 10px 1px #0001;
+    /* border: 1px solid #dfdfdf; */
+    background-color: #fff;
+    border-radius: 0.25rem;
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+}
+
 
 /* fundLust end */

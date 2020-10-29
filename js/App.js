@@ -165,6 +165,7 @@ class App {
 
 window.addEventListener("load",(e)=>{
     window.app = new App();
+    window.swiper = new Swiper();
 });
 
 

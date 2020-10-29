@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-3.4.1.js"></script>
+    <style>
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { display: flex; align-items: center; justify-content: center; width: 100%; height: 100vh; } 
+
+        #container {
+            width: 1000px;
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+
+        .inner {
+            height: 100%;
+            position: absolute;
+            top: 0;
+            display: flex;
+            align-items: center;
+            left: 0;
+        }
+
+
+        .item {
+            margin-right: 10px;
+            height: 100%;
+            width: calc(970px / 4);
+            background-color: #ddd;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div class="inner">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">4</div>
+            <div class="item">5</div>
+            <div class="item">6</div>
+            <div class="item">7</div>
+            <div class="item">8</div>
+            <div class="item">9</div>
+            <div class="item">10</div>
+            <div class="item">11</div>
+            <div class="item">12</div>
+            <div class="item">13</div>
+            <div class="item">14</div>
+            <div class="item">15</div>
+        </div>
+    </div>
+
+    <script>
+        const { dir , log } = console;
+        let container = document.querySelector("#container");
+        let inner = document.querySelector(".inner");
+        let click = false;
+        let left = 0;
+
+        let preX , preY = null;
+
+        container.addEventListener("mousedown",(e)=>{
+            click = true;
+            preX = e.pageX;
+            preY = e.pageY;
+        });
+
+        container.addEventListener("mouseout",(e)=>{
+            
+        });
+
+        window.addEventListener("mouseup",(e)=>{
+            click = false;
+        });
+
+        window.addEventListener("mousemove",(e)=>{
+            if(!click) return;
+            let { pageX : x, pageY : y } = e;
+            if(x === preX) return;
+            let drc = x > preX;
+            preX = x;
+            // log(drc ? "오쪽" : "외ㄴ쪽");
+            
+            left += 3 * ( drc * 2 - 1 );
+            log(left);
+            inner.style.left = left + "px";
+        });
+
+
+    </script>
+</body>
+</html>
