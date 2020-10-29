@@ -6,6 +6,7 @@ class Swiper {
         this.left = 0;
         this.preX = null;
         this.preY = null;
+        this.STEP = 0.8;
         this.setEvent();
     }
 
@@ -23,7 +24,7 @@ class Swiper {
             let { clientX : x } = e;
             if( x === this.preX ) return;
             let delta = x - this.preX;
-            this.left += 0.5 * delta;
+            this.left += this.STEP * delta;
             this.$inner.css({ left : this.left + "px" });
             
             this.preX = x;

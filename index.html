@@ -8,11 +8,42 @@
     <script src="js/jquery-3.4.1.js"></script>
     <script src="js/App.js"></script>
     <script src="js/Swiper.js"></script>
+    <script src="js/Draw.js"></script>
     <link rel="stylesheet" href="fa/css/all.min.css">
     <title>^^7</title>
 </head>
 
 <body>
+
+    <div id="popup">
+        <div class="popup_container">
+            <div class="parent-cover flex-center-column popup-box">
+                <img src="images/new/logo_1.png" alt="alt" title="title">
+                <h1 class="popup_title mt-1 fowe-3 mb-2"><span class="fowe-4">킥스타터</span> 투자하기</h1>
+                <div class="pp-input-box">
+                    <label class="color-333 fowe-2 fosi-4">펀드번호</label>
+                    <input type="text" readonly id="iv_number">
+                </div>
+                <div class="pp-input-box mt-1">
+                    <label class="color-333 fowe-2 fosi-4">창업 펀드명</label>
+                    <input type="text" readonly id="iv_fund_name">
+                </div>
+                <div class="pp-double-input mt-1">
+                    <div class="pp-input-box mt-1">
+                        <label class="color-333 fowe-2 fosi-4">투자자 이름</label>
+                        <input type="text" placeholder="이름" id="iv_name">
+                    </div>
+                    <div class="pp-input-box mt-1">
+                        <label class="color-333 fowe-2 fosi-4">투자 금액</label>
+                        <input type="text" placeholder="금액" class="auto_comma" id="iv_money">
+                    </div>
+                </div>
+                <canvas id="iv_canvas" class="mt-1" width="480" height="150"></canvas>
+                <button class="iv_btn mt-2">제출하기</button>
+            </div>
+            <div class="popup-close"><i class="fa fa-times"></i></div>
+        </div>
+    </div>
 
     <header>
         <div id="logo" class="flex-center-row">
@@ -79,7 +110,7 @@
                                 <p class="mt-1 fosi-7 fowe-4" id="main_invest_recent">0원</p>
                             </div>
                             <div class="card_bottom fosi-55 fowe-3" id="main_invest_recent_txt">
-                                <span>0</span>% of total
+                                Increase by 45%
                             </div>
                         </div>
                     </div>
@@ -152,7 +183,7 @@
                         <i class="far fa-credit-card ml-1 fosi-6"></i>
                         <div class="form_items ml-1">
                             <h1 class="fosi-5 fowe-4">모집금액</h1>
-                            <input type="text" placeholder="모집금액을 입력해주세요" class="fowe-5 fosi-6" id="form_total">
+                            <input type="text" placeholder="모집금액을 입력해주세요" class="fowe-5 fosi-6 auto_comma" id="form_total">
                         </div>
                         <div class="form_top_tip fosi-4">
                             천단위 구분기호는 자동으로 입력됩니다. <i class="fosi-55 fas fa-info-circle"></i>
@@ -174,26 +205,44 @@
                 <div class="list mt-3">
                     <div class="list_inner">
 
-                        <div class="fund_item">
+                        <!-- <div class="fund_item">
                             <canvas class="fund_canvas" width="170" height="170"></canvas>
                             <p class="fund_item_num fosi-6 fowe-5 color-333 mt-1">A0001</p>
-                            <p class="fund_item_name ell color-666" title="정재성인척">정재성인척하는정재성인척하는정재성인척하는정재성</p>
-                            <p></p>
+                            <p class="fund_item_name ell color-333" title="정재성인척">정재성인척하는정재성인척하는정재성인척하는정재성</p>
+                            <p class="fosi-4 fund_item_total ell color-666" title="250,000원">모집 금액 : 250,000,000,000원</p>
+                            <p class="fosi-4 fund_item_current ell color-666" title="250,000원">현재 금액 : 250,000,000원</p>
                             <p class="fund_item_date color-999 fosi-3">2020년 10월 22일 14시 16분 25초 마감</p>
-                        </div>
-                        <div class="fund_item"></div>
-                        <div class="fund_item"></div>
-                        <div class="fund_item"></div>
-                        <div class="fund_item"></div>
-                        <div class="fund_item"></div>
-                        <div class="fund_item"></div>
+                            <button class="btn btn-n mt-1">모집 완료</button>
+                        </div> -->
 
                     </div>
                 </div>
 
             </section>
-            <section id="investor_list" class="page">
-                투자자목록
+            <section id="investor_list" class="page flex-center-column">
+
+                <div class="iv_title fosi-10 tealc">
+                    <span class="fowe-5">킥스타터</span> 투자자 목록
+                    <p class="fowei-4 fosi-5 color-999">킥스타터를 이용해주시는 고마운 분들입니다.</p>
+                </div>
+
+                <div class="iv_list mt-2">
+                    <div class="iv_item">
+                        <div class="iv_item_top tealc">
+                            <h1 class="color-fff fosi-4 fowe-4 mt-1">A0001</h1>
+                            <i class="far fa-user"></i>
+                        </div>
+
+                        <div class="iv_item_bottom">
+                            <div class="iv_item_graph"></div>
+                        </div>
+                    </div>
+                    <div class="iv_item"></div>
+                    <div class="iv_item"></div>
+                    <div class="iv_item"></div>
+                    <div class="iv_item"></div>
+                </div>
+                
             </section>
         </div>
 
@@ -208,6 +257,9 @@
 <!-- https://www.behance.net/gallery/106356433/Dashboard-UI?tracking_source=search_projects_recommended%7Cdashboard%20web -->
 <!-- https://www.google.com/search?q=web+form+design&rlz=1C1SQJL_koKR882KR882&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiv_dT7y9XsAhUKc3AKHU7VAJIQ_AUoAXoECAQQAw&biw=1883&bih=950#imgrc=cVwOCqBAlxpJDM -->
 <!-- https://www.kixx.co.kr/ -->
+<!-- https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F198299189826415192%2F&psig=AOvVaw2SrfPfVoKfB8hYO49EoXFr&ust=1604058390568000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCMCq_6bd2ewCFQAAAAAdAAAAABAD
+ -->
+ <!-- 이거 하다가 감 -->
 <!-- #00ffc4
 #000e6e
 #5f5fff

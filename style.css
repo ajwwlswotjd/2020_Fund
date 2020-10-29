@@ -104,6 +104,7 @@ li {list-style: none; }
 .fowe-5 { font-weight: 600; }
 .fowe-6 { font-weight: 700; }
 
+.color-fff { color: #fff; }
 .color-333 { color: #333030; }
 .color-666 { color: #666; }
 .color-ddd { color: #ddd; }
@@ -112,6 +113,7 @@ li {list-style: none; }
 .color-black { color: black; }
 
 .ell { overflow: hidden;  text-overflow: ellipsis; white-space: nowrap; }
+.border { border: 1px solid #ddd; }
 
 body {
     width: 100%;
@@ -121,12 +123,35 @@ body {
 }
 
 .btn {
-    outline: none;    
+    outline: none;   
+    border: none;
+    border-radius: 0.25rem;
+    width: 80px;
+    height: 35px;
+    cursor: pointer;
+    transition: background-color .2s;
+}
+
+.btn:hover {
+    background-color: #696969 !important;
 }
 
 .btn.btn-p {
-    background-color: #cb88cb;
+    color: #fff;
+    background-color: #af66fa;
 }
+
+.btn.btn-b {
+    color: #fff;
+    background-color: #5f5fff;
+}
+
+.btn.btn-n {
+    color: #fff;
+    background-color: #000e6e;
+}
+
+
 
 /*  common end */
 
@@ -164,7 +189,7 @@ header {
 }
 
 #pages { width: 100%; background-color: #f7f7f7; position: relative; display: flex; flex-direction: column; overflow: hidden; }
-#pages .page:nth-child(3) { top: 0; }
+#pages .page:nth-child(4) { top: 0; }
 #pages .page {
     width: 100%;
     height: 100%;
@@ -414,16 +439,14 @@ nav > li > i {
     background-color: #07d4a4;
 }
 
-#fail_popup {
-    width: 100%;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1001;
-    background-color: #0007;
 
-    /* display: none; */
+.popup-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    color: #333030;
+    font-size: 1rem;
 }
 
 /* form end */
@@ -462,17 +485,160 @@ nav > li > i {
     background-color: #fff;
     border-radius: 0.25rem;
     position: relative;
-    padding: 3rem;
+    padding: 1rem 2rem;
 
     display: flex;
     flex-direction: column;
 }
 
+.fund_item > p {
+    max-height: 25px;
+    overflow-y: auto;
+}
+
 .fund_canvas {
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
     margin-left: auto;
 }
 
+tr > td {
+    max-height: 45px !important;
+}
+
+#popup {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    background-color: #0007;
+
+    display: none;
+}
+
+.popup_container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: #fff;
+    width: 600px;
+    padding: 3rem 0;
+}
+
+.popup-box > img {
+    width: 100px;
+}
+
+.pp-input-box {
+    width: 80%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.pp-input-box > input {
+    border: 1px solid #c7c7c7;
+    margin-top: 0.25rem;
+    height: 40px;
+    border-radius: 0.1rem;
+    outline: none;
+    padding-left: 1rem;
+}
+
+.pp-double-input {
+    width: 80%;
+    display: grid;
+    grid-template-columns:1fr 1fr;
+    grid-gap: 10px;
+}
+
+.pp-double-input > .pp-input-box {
+    width: 100%;
+}
+
+.pp-input-box > input:focus {
+    box-shadow: 0px 0px 5px 1px #007bff33;
+}
+
+.pp-input-box > input:read-only {
+    background-color: #fdfdfd;
+}
+
+#iv_canvas {
+    border: 1px solid #c7c7c7;
+}
+
+.iv_btn {
+    background-color: #5f5fff;
+    width: 80%;
+    height: 40px;
+    color: #fff;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.iv_btn:hover {
+    background-color: #6767ff; 
+}  
+
+.iv_list {
+    width: 90%;
+    height: 250px;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    grid-gap: 10px;
+}
+
+.iv_item {
+    height: 100%;
+    background-color: #fff;
+    position: relative;
+    border-radius: 0.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.iv_item_bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 5px;
+    background-color: #e9e9e9;;
+}
+
+.iv_item_top > i {
+    color: #333030;
+    background-color: #fff;
+    padding: 1rem;
+    font-size: 1.5rem;
+    border-radius: 100%;
+    position: absolute;
+    top: 60%;
+    border: 1px solid #d7d7d7;
+}
+
+.iv_item_top {
+    width: 100%;
+    height: 30%;
+    background-color: #5f5fff;
+    border-top-right-radius: 0.25rem;
+    border-top-left-radius: 0.25rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.iv_item_graph {
+    width: 40%;
+    height: 100%;
+    background-color: #5f5fff;
+}
 
 
 /* fundLust end */
