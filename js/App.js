@@ -1,5 +1,5 @@
 const { log , dir } = console;
-const PI = Math.PI;
+const {PI , ceil} = Math;
 const MP = - PI / 2;
 
 
@@ -7,7 +7,7 @@ class App {
     constructor(){
 
         this.num;
-        this.conv_now = 3;
+        this.conv_now = 0;
         this.datas;
         this.investorList = [];
         this.fxArr = [ this.drawMain , this.drawForm , this.drawFund , this.drawInvestor ];
@@ -15,6 +15,8 @@ class App {
         this.$links = $("nav > li");
         this.$pages = $("#pages > .page");
         this.$popup = $("#popup");
+        this.PAGE_NOW = 1;
+        this.PAGE_SHOW_CNT = 5;
         this.isMoving = false;
         
         this.signed = false;
@@ -27,14 +29,35 @@ class App {
         return $.getJSON("./js/fund.json");
     }
 
+    get investorTotalPage(){
+        return ceil(this.investorList.length / this.PAGE_SHOW_CNT);
+    }
+
     addEvent(){
         
         $("nav > li").on("click", this.navClickEventHandler );
         $(".auto_comma").on("input" , this.autoCommaInputEventHandler );
         $("#form_submit_btn").on("click", this.fundRegisterBtnClickEventHandler );
-        $(".popup-close").on("click",()=> {this.$popup.fadeOut()} );
+        $(".popup-close").on("click",()=> {this.$popup.fadeOut(); this.drawFund(); } );
         $(".iv_btn").on("click", this.ivBtnClickEventHandler );
+        $(".pg_controller").on("click", this.pgControllerBtnClickEventHandler );
+        $("#iv_money").on("input", this.ivInputEventHandler );
 
+    }
+
+    ivInputEventHandler = e => {
+        let fund = this.datas.find(x=> x.number === $("#iv_number").val() );
+        let value = e.currentTarget.value.split(",").join('')*1;
+        if(fund.total < value) e.currentTarget.value = fund.total.toLocaleString();
+        
+    }
+
+    pgControllerBtnClickEventHandler = e => {
+        let num = e.currentTarget.dataset.num * 1;
+        this.PAGE_NOW += num;
+        if(this.PAGE_NOW > this.investorTotalPage ) this.PAGE_NOW = this.investorTotalPage;
+        if(this.PAGE_NOW <= 0) this.PAGE_NOW = 1;
+        this.renderPaging();
     }
 
     ivBtnClickEventHandler = e => {
@@ -43,8 +66,9 @@ class App {
         let money = $("#iv_money").val().split(",").join('') * 1;
         let cvs = document.querySelector("#iv_canvas");
         let sign = cvs.toDataURL();
+        let fund = this.datas.find(x=> x.number === num);
 
-        if(name.trim() === "" || money < 1 || !this.signed){
+        if(name.trim() === "" || money < 1 || !this.signed ){
             alert('누락된 항목이 있습니다.');
             return;
         }
@@ -55,7 +79,8 @@ class App {
             this.investorList[find].money += money;
         }
         alert("투자에 성공하였습니다.");
-        this.$popup.fadeOut();
+        fund.current += money;
+        $(".popup-close").click();
     }
 
     fundRegisterBtnClickEventHandler = e => {
@@ -206,6 +231,94 @@ class App {
 
     drawInvestor(){
         // 투자자 목록
+        let $list = $(".iv_list");
+        $list.html("");
+        this.PAGE_NOW = 1;
+        this.renderPaging();        
+    }
+
+    renderPaging(){
+
+        let $list = $(".pg_btns");
+        $list.empty();
+        let html  = ``;
+        for(let i = 1; i <= this.investorTotalPage; i++) html += `<button data-page="${i}" class="pg_btn pg_btn_normal ${ this.PAGE_NOW === i ? "pg_now" : "" }">${i}</button>`;
+        $list.html(html);
+        $list.find("button").on("click",(e)=>{
+            this.PAGE_NOW = e.currentTarget.dataset.page * 1;
+            this.renderPaging();
+        });
+        let slice_idx = (this.PAGE_NOW - 1)*5;
+        let list = this.investorList.reverse().slice( slice_idx , slice_idx+5 );
+
+        $list = $('.iv_list');
+        $list.empty();
+        $list.hide();
+        list.forEach( iv =>{
+            let fund = this.datas.find(x=> x.number === iv.num );
+            let div = document.createElement("div");
+            let percent = olimToPercent( iv.money / fund.total );
+            div.classList.add("iv_item");
+            div.innerHTML =
+            `<div class="iv_item_top tealc">
+                <h1 class="color-fff fosi-4 fowe-4 mt-1">${ fund.number }</h1>
+                <i class="far fa-user"></i>
+            </div>
+            <div class="iv_item_body tealc">
+                <p class="iv_name ell fosi-5 fowe-4 ell" title="${ xss( iv.name ) }">${ xss(iv.name) }</p>
+                <p class="ell color-666 iv_fund_name fosi-3 fowe-3 mt-1" title="${ xss(fund.name) }">펀드명 : ${ xss(fund.name) }</p>
+                <p class="ell color-666 iv_money fosi-3 fowe-3" title="${ iv.money.toLocaleString() }원">투자금액 : ${ iv.money.toLocaleString() }원</p>
+                <p class="ell color-333 iv_percent fosi-4 fowe-4">지분 : ${percent}%</p>
+                <button class="btn btn-b iv_sign_btn mt-1">투자펀드계약서</button>
+            </div>
+            <div class="iv_item_bottom">
+                <div class="iv_item_graph"></div>
+            </div>`;
+            $list.append(div);
+            $(div).find(".iv_item_graph").animate({ width : percent+"%" }, 2000);
+            $(div).find(".iv_sign_btn").on('click',(e)=>{
+                this.downloadSign( iv , fund );
+            });
+        }); 
+        $list.fadeIn();
+        this.investorList.reverse();
+    }
+
+    async downloadSign( iv , fund ){
+        log('asdf');
+        let canvas = document.createElement("canvas");
+        canvas.width = 793;
+        canvas.height = 495;
+        let ctx = canvas.getContext('2d');
+        let img = await this.loadImage('./images/funding.png');
+        ctx.drawImage( img , 0 , 0 );
+
+        ctx.fillStyle = "#000";
+        ctx.textAlign = "left";
+        ctx.font = "300 16px noto";
+        ctx.textBaseline = "middle";
+        ctx.fillText( fund.number , 327 , 177 );
+        ctx.fillText( fund.name  , 327 , 218 );
+        ctx.fillText( iv.name , 327 , 264 );
+        ctx.fillText( iv.money.toLocaleString() , 327 , 310 );
+        let sign = await this.loadImage( iv.sign );
+        ctx.drawImage( sign , 485 , 389 , 240 , 75 );
+        
+        let base64 = canvas.toDataURL();
+        let a = document.createElement("a");
+        a.href = base64;
+        a.download = "download";
+        a.click();
+    }
+
+    loadImage(src){
+        return new Promise( (res,rej)=>{
+            let img = new Image();
+            img.addEventListener("load",()=>{
+                res(img);
+            });
+            img.src = src;
+        } );
     }
 
     render(){
@@ -216,8 +329,7 @@ class App {
         this.datas = await this.readData();
         this.addEvent();
         this.render();
-        // this.drawForm();
-        this.drawFund();
+        this.fxArr[this.conv_now].bind(this)();
     }
 
     getFundNum(){
@@ -301,7 +413,10 @@ window.xss = function(str){
         ["&","&amp;"],
         ["<","&lt;"],
         [">","&gt;"],
-        ["\n","<br>"]
+        ["\n","<br>"],
+        ['"','&quot;'],
+        ["'","&#39;"]
+
     ];
     items.forEach(x=>{
         str = str.replaceAll(x[0],x[1]);
@@ -312,3 +427,11 @@ window.xss = function(str){
 window.olim = function(num){
     return Math.ceil(num * 100) / 100;
 }
+
+window.olimToPercent = function(num){
+    return Math.ceil(num * 10000) / 100;   
+}
+
+window.addEventListener("keydown",(e)=>{
+    if(e.keyCode === 9) e.preventDefault();
+});
